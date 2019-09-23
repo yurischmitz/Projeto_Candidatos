@@ -7,19 +7,19 @@ package telas;
 
 import controles.BairroControle;
 import ferramentas.CaixaDeDialogo;
-import ferramentas.Validacao;
 import modelos.Bairro;
 
 /**
  *
- * @author jdhein
+ * @author yuris
  */
-public class CadBairros extends javax.swing.JFrame {
+public class DialogBairros extends javax.swing.JDialog {
 
     /**
-     * Creates new form CadClientes
+     * Creates new form DialogBairros
      */
-    public CadBairros() {
+    public DialogBairros(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -38,7 +38,7 @@ public class CadBairros extends javax.swing.JFrame {
         lblBairro = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(51, 153, 255));
@@ -52,9 +52,9 @@ public class CadBairros extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(121, 121, 121)
+                .addGap(156, 156, 156)
                 .addComponent(jLabel1)
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -64,11 +64,11 @@ public class CadBairros extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 124, 136, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, -1));
+        getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 136, -1));
 
         lblBairro.setText("Bairro");
-        getContentPane().add(lblBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 108, -1, -1));
+        getContentPane().add(lblBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
         btnSalvar.setText("SALVAR");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -76,9 +76,10 @@ public class CadBairros extends javax.swing.JFrame {
                 btnSalvarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 123, -1, -1));
+        getContentPane().add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, -1, -1));
 
-        setBounds(0, 0, 416, 339);
+        setSize(new java.awt.Dimension(483, 267));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -88,11 +89,11 @@ public class CadBairros extends javax.swing.JFrame {
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Informe um bairro corretamente", 'a');
                 return;
             }
-            
+
             //Preenche o objeto Bairro
             Bairro objBairro = new Bairro();
             objBairro.setNome(txtNome.getText());
-        
+
             //incluir no banco
             BairroControle objBairroCon = new BairroControle(objBairro, null);
             boolean wRetorno = objBairroCon.incluir();
@@ -101,9 +102,9 @@ public class CadBairros extends javax.swing.JFrame {
             }else{
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Ops, não deu certo", 'e');
             }
-            
+
         }catch(Exception ex){
-            
+
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -124,21 +125,27 @@ public class CadBairros extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadBairros().setVisible(true);
+                DialogBairros dialog = new DialogBairros(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

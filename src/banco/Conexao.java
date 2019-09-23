@@ -50,7 +50,7 @@ public class Conexao {
         try{
             
             if(con != null){
-                System.out.print("Conexão com Banco de Dados Fechada!");
+                System.out.print("Conexão com Banco de Dados Fechada!\n");
                 con.close();
             }
             
