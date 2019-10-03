@@ -7,7 +7,7 @@ package telas;
 
 import ferramentas.CaixaDeDialogo;
 import modelos.Candidato;
-import modelos.CandidatoControle;
+import controles.CandidatoControle;
 
 /**
  *
@@ -31,8 +31,8 @@ public class CadCandidatos extends javax.swing.JFrame {
     private void atualizarTabela(){
         try{
             
-            objCandidatosControle = new CandidatosControle(null, jtbBairros);
-            objCandidatosControle.preencher();
+            objCandidatoControle = new CandidatoControle(null, jtbBairros);
+            objCandidatoControle.preencher();
             
         }catch(Exception ex){
             CaixaDeDialogo.obterinstancia().exibirMensagem("ERRO:" + ex.getMessage());
