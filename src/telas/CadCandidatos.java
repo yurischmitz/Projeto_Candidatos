@@ -8,6 +8,10 @@ package telas;
 import ferramentas.CaixaDeDialogo;
 import modelos.Candidato;
 import controles.CandidatoControle;
+import ferramentas.Combos;
+import ferramentas.Formatacao;
+import ferramentas.Validacao;
+import java.sql.SQLException;
 
 /**
  *
@@ -18,6 +22,7 @@ public class CadCandidatos extends javax.swing.JFrame {
     
     Candidato objCandidato;
     CandidatoControle objCandidatoControle;
+    Combos cbBairro;
     
     /**
      * Creates new form CadCandidatos
@@ -25,13 +30,22 @@ public class CadCandidatos extends javax.swing.JFrame {
     public CadCandidatos() {
         initComponents();
         
+        try {
+            cbBairro = new Combos(jcbBairro);
+            cbBairro.PreencheCombo("SELECT id, nome FROM "
+                    + "bairros ORDER BY nome");
+        } catch (SQLException ex) {
+            CaixaDeDialogo.obterinstancia().exibirMensagem("ERRO:" + ex.getMessage());
+        }
+        
         limparTela();
     }
     
     private void atualizarTabela(){
         try{
             
-            objCandidatoControle = new CandidatoControle(null, jtbBairros);
+            objCandidatoControle = new CandidatoControle(null, jtbCandidatos);
+            //Formatacao.ajustaDataHoraDMA(data);
             objCandidatoControle.preencher();
             
         }catch(Exception ex){
@@ -50,7 +64,7 @@ public class CadCandidatos extends javax.swing.JFrame {
 
         btnSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtbBairros = new javax.swing.JTable();
+        jtbCandidatos = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         btnLimpar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -58,8 +72,10 @@ public class CadCandidatos extends javax.swing.JFrame {
         txtNome = new javax.swing.JTextField();
         btnAtualizar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        lblBairro = new javax.swing.JLabel();
-        cbBairro1 = new javax.swing.JComboBox<>();
+        lblDataNasc = new javax.swing.JLabel();
+        jcbBairro = new javax.swing.JComboBox<>();
+        txtDataNasc = new javax.swing.JTextField();
+        lblBairro1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -70,9 +86,9 @@ public class CadCandidatos extends javax.swing.JFrame {
                 btnSalvarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, -1));
+        getContentPane().add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, -1, -1));
 
-        jtbBairros.setModel(new javax.swing.table.DefaultTableModel(
+        jtbCandidatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -83,12 +99,12 @@ public class CadCandidatos extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtbBairros.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtbCandidatos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jtbBairrosMousePressed(evt);
+                jtbCandidatosMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jtbBairros);
+        jScrollPane1.setViewportView(jtbCandidatos);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 451, 140));
 
@@ -102,7 +118,7 @@ public class CadCandidatos extends javax.swing.JFrame {
                 btnLimparActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLimpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, -1, -1));
+        getContentPane().add(btnLimpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Nome");
@@ -111,7 +127,7 @@ public class CadCandidatos extends javax.swing.JFrame {
         lblId.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblId.setText("ID");
         getContentPane().add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
-        getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 250, -1));
+        getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 200, -1));
 
         btnAtualizar.setText("Atualizar");
         btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -119,14 +135,19 @@ public class CadCandidatos extends javax.swing.JFrame {
                 btnAtualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, -1, 20));
+        getContentPane().add(btnAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, -1, 30));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 470, -1));
 
-        lblBairro.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblBairro.setText("Bairro");
-        getContentPane().add(lblBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
+        lblDataNasc.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblDataNasc.setText("Data de Nascimento");
+        getContentPane().add(lblDataNasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
 
-        getContentPane().add(cbBairro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 120, -1));
+        getContentPane().add(jcbBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 200, -1));
+        getContentPane().add(txtDataNasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 120, -1));
+
+        lblBairro1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblBairro1.setText("Bairro");
+        getContentPane().add(lblBairro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
 
         setSize(new java.awt.Dimension(518, 432));
         setLocationRelativeTo(null);
@@ -143,9 +164,18 @@ public class CadCandidatos extends javax.swing.JFrame {
 
             objCandidato = new Candidato();
             objCandidato.setNome(txtNome.getText().trim());
+            String data = Formatacao.ajustaDataAMD(txtDataNasc.getText());
+            objCandidato.setData_nasc(data);
+            
             if(!lblId.getText().equals("ID")){
                 objCandidato.setId(Integer.parseInt(lblId.getText()));
                 objCandidatoControle = new CandidatoControle(objCandidato, null);
+                
+                
+                Combos c = (Combos) jcbBairro.getSelectedItem();
+                objCandidato.setId_bairro(Integer.parseInt(c.getCodigo()));
+                
+                     
                 retorno = objCandidatoControle.alterar();
             }else{
                 objCandidatoControle = new CandidatoControle(objCandidato, null);
@@ -166,14 +196,14 @@ public class CadCandidatos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void jtbBairrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbBairrosMousePressed
+    private void jtbCandidatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbCandidatosMousePressed
         try{
 
-            int linhaSelecionada = jtbBairros.getSelectedRow();//pega a linha selecionada
-            String codigo = jtbBairros.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
+            int linhaSelecionada = jtbCandidatos.getSelectedRow();//pega a linha selecionada
+            String codigo = jtbCandidatos.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
 
             //Verifica se clicou na coluna 2 = EXCLUIR
-            if(jtbBairros.isColumnSelected(2)){
+            if(jtbCandidatos.isColumnSelected(3)){
                 try{
                     objCandidatoControle = new CandidatoControle(null, null);
                     objCandidato = objCandidatoControle.buscar(codigo);
@@ -213,7 +243,7 @@ public class CadCandidatos extends javax.swing.JFrame {
         }catch(Exception ex){
             CaixaDeDialogo.obterinstancia().exibirMensagem(ex.getMessage(), 'e');
         }
-    }//GEN-LAST:event_jtbBairrosMousePressed
+    }//GEN-LAST:event_jtbCandidatosMousePressed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         limparTela();
@@ -242,7 +272,9 @@ public class CadCandidatos extends javax.swing.JFrame {
         try{
             lblId.setText(String.valueOf(objCandidato.getId()));
             txtNome.setText(objCandidato.getNome());
-           
+            cbBairro.SetaComboBox(String.valueOf(objCandidato.getId_bairro()));
+            txtDataNasc.setText(objCandidato.getData_nasc());
+                
             btnSalvar.setEnabled(true);
             
             atualizarTabela();
@@ -291,14 +323,16 @@ public class CadCandidatos extends javax.swing.JFrame {
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cbBairro1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jtbBairros;
-    private javax.swing.JLabel lblBairro;
+    private javax.swing.JComboBox<String> jcbBairro;
+    private javax.swing.JTable jtbCandidatos;
+    private javax.swing.JLabel lblBairro1;
+    private javax.swing.JLabel lblDataNasc;
     private javax.swing.JLabel lblId;
+    private javax.swing.JTextField txtDataNasc;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 }

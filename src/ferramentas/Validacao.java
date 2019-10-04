@@ -1,5 +1,7 @@
 package ferramentas;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JFormattedTextField;
@@ -55,7 +57,7 @@ public class Validacao {
         return cnpj.equals(cnpj.substring(0, 12) + digito1.toString() + digito2.toString());
     }
 
-    public static boolean validarData(int d, int m, int a) {
+    /*public static boolean validarData(int d, int m, int a) {
         boolean correto = true;
         int[] dias = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         if (a < 0 || m < 1 || m > 12) {
@@ -70,6 +72,28 @@ public class Validacao {
             }
         }
         return (correto);
+    }*/
+    
+    public static boolean validarData(String data) {
+        try {
+            //SimpleDateFormat é usada para trabalhar com formatação de datas
+            //neste caso o formatador irá utilizar o formato "dd/MM/yyyy"
+            //dd = dia, MM = mes, yyyy = ano
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            //a mágica desse método acontece aqui, pois o setLenient() é usado para setar
+            //sua escolha sobre datas estranhas, quando setamos para "false" estamos dizendo
+            //que não aceitamos datas falsas como 31/02/2018
+            sdf.setLenient(false);
+            //aqui tentamos converter a String em um objeto do tipo date, se funcionar
+            //sua data é valida
+            sdf.parse(data);
+            //se nada deu errado retorna true (verdadeiro)
+            return true;
+        } catch (ParseException ex) {
+            //se algum passo dentro do "try" der errado quer dizer que sua data é falsa, então,
+            //retorna falso
+        return false;
+        }
     }
 
 }

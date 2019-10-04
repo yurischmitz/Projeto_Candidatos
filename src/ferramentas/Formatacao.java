@@ -160,6 +160,17 @@ public class Formatacao {
         }
         return (dataFormatada);
     }
+    
+    public static String ajustaDataAMD(String data) {
+        String dataFormatada = null;
+        try {
+            Date dataDMA = new SimpleDateFormat("dd/MM/yyyy").parse(data);
+            dataFormatada = new SimpleDateFormat("yyyy-MM-dd").format(dataDMA);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return (dataFormatada);
+    }
 
     public static String removerFormatacao(String dado) {
         String retorno = "";

@@ -1,6 +1,7 @@
 package controles;
 
 import banco.Conexao;
+import ferramentas.Formatacao;
 import java.awt.Color;
 import java.awt.Component;
 import java.sql.Connection;
@@ -39,8 +40,10 @@ public class CandidatoControle {
         PreparedStatement stmt = null;
         
         try{
-            stmt = con.prepareStatement("INSERT INTO candidatos(nome) VALUES(?)");
+            stmt = con.prepareStatement("INSERT INTO candidatos(nome,id_bairro,data_nascimento) VALUES(?,?,?)");
             stmt.setString(1, objCandidato.getNome());
+            stmt.setInt(2, objCandidato.getId_bairro());
+            stmt.setString(3, objCandidato.getData_nasc());
             
             stmt.executeUpdate();
             
@@ -61,9 +64,11 @@ public class CandidatoControle {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE candidatos SET nome=? WHERE id=?");
+            stmt = con.prepareStatement("UPDATE candidatos SET nome=?, id_bairro=?, data_nascimento=? WHERE id=?");
             stmt.setString(1, objCandidato.getNome());
-            stmt.setInt(2, objCandidato.getId());
+            stmt.setInt(2, objCandidato.getId_bairro());
+            stmt.setString(3, objCandidato.getData_nasc());
+            stmt.setInt(4, objCandidato.getId());
             
             stmt.executeUpdate();
             
@@ -87,6 +92,7 @@ public class CandidatoControle {
         
         cabecalhos.add("Código");
         cabecalhos.add("Nome");
+        cabecalhos.add("Nascimento");
         cabecalhos.add("Excluir");
         
         ResultSet result = null;
@@ -94,7 +100,7 @@ public class CandidatoControle {
         try {
 
             String SQL = "";
-            SQL = " SELECT id, nome, id_bairro, data_nascimento ";
+            SQL = " SELECT id, nome, data_nascimento ";
             SQL += " FROM candidatos ";
             SQL += " WHERE data_exclusao is null ";
             SQL += " ORDER BY id ";
@@ -107,6 +113,7 @@ public class CandidatoControle {
                 
                 linha.add(result.getInt(1));
                 linha.add(result.getString(2));
+                linha.add(result.getString(3));
                 linha.add("X");
                 //linha.add(new ImageIcon(""));
                 //linha.add(new ImageIcon(getClass().getResource("C:\\Users\\yuris\\Documents\\PROGRAMAÇÃO AVANÇADA\\NetBeans\\Meu_Projeto2019B\\src\\imagens\\trash.png")));
@@ -142,9 +149,12 @@ public class CandidatoControle {
                     column.setPreferredWidth(60);
                     break;
                 case 1:
-                    column.setPreferredWidth(230);
+                    column.setPreferredWidth(200);
                     break;
                 case 2:
+                    column.setPreferredWidth(70);
+                    break;
+                case 3:
                     column.setPreferredWidth(10);
                     break;
             }
@@ -190,6 +200,8 @@ public class CandidatoControle {
                 {
                     objCandidato.setId(rs.getInt(1));
                     objCandidato.setNome(rs.getString(2));
+                    objCandidato.setId_bairro(rs.getInt(3));
+                    objCandidato.setData_nasc(rs.getString(4));
                 }
             }
 
