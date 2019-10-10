@@ -149,6 +149,17 @@ public class Formatacao {
         }
         return (dataFormatada);
     }
+    
+    public static String ajustaDataDMA(String data) {
+        String dataFormatada = null;
+        try {
+            Date dataAMD = new SimpleDateFormat("yyyy-MM-dd").parse(data);
+            dataFormatada = new SimpleDateFormat("dd/MM/yyyy").format(dataAMD);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return (dataFormatada);
+    }
 
     public static String ajustaDataHoraAMD(String data) {
         String dataFormatada = null;

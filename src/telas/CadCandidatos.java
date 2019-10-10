@@ -24,20 +24,15 @@ public class CadCandidatos extends javax.swing.JFrame {
     CandidatoControle objCandidatoControle;
     Combos cbBairro;
     
-    /**
-     * Creates new form CadCandidatos
-     */
     public CadCandidatos() {
         initComponents();
         
         try {
             cbBairro = new Combos(jcbBairro);
-            cbBairro.PreencheCombo("SELECT id, nome FROM "
-                    + "bairros ORDER BY nome");
+            cbBairro.PreencheCombo("SELECT id, nome FROM " + "bairros ORDER BY nome");
         } catch (SQLException ex) {
             CaixaDeDialogo.obterinstancia().exibirMensagem("ERRO:" + ex.getMessage());
-        }
-        
+        }     
         limparTela();
     }
     
@@ -45,14 +40,45 @@ public class CadCandidatos extends javax.swing.JFrame {
         try{
             
             objCandidatoControle = new CandidatoControle(null, jtbCandidatos);
-            //Formatacao.ajustaDataHoraDMA(data);
             objCandidatoControle.preencher();
             
         }catch(Exception ex){
             CaixaDeDialogo.obterinstancia().exibirMensagem("ERRO:" + ex.getMessage());
         }
+    }   
+    
+    private void preencherCampos(){
+        try{
+            lblId.setText(String.valueOf(objCandidato.getId()));
+            txtNome.setText(objCandidato.getNome());
+            cbBairro.SetaComboBox(String.valueOf(objCandidato.getId_bairro()));
+            txtDataNasc.setText(Formatacao.ajustaDataDMA(objCandidato.getData_nasc()));
+                
+            btnSalvar.setEnabled(true);
+            
+            atualizarTabela();
+            
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+        }
     }
-
+    
+    private void limparTela(){
+        try{
+            lblId.setText("ID");
+            txtNome.setText("");
+            cbBairro.SetaComboBox(String.valueOf(""));
+            txtDataNasc.setText("");
+           
+            btnSalvar.setEnabled(true);
+            
+            atualizarTabela();
+            
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,7 +161,7 @@ public class CadCandidatos extends javax.swing.JFrame {
                 btnAtualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, -1, 30));
+        getContentPane().add(btnAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 200, -1, 30));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 470, -1));
 
         lblDataNasc.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -156,26 +182,27 @@ public class CadCandidatos extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try{
             boolean retorno;
+            
             //validar os campos
-            if(txtNome.getText().trim().length() == 0){
-                CaixaDeDialogo.obterinstancia().exibirMensagem("Informe um bairro corretamente", 'a');
-                return;
-            }
+            //if(txtNome.getText().trim().length() == 0){
+              //  CaixaDeDialogo.obterinstancia().exibirMensagem("Informe um bairro corretamente", 'a');
+                //return;
+            //}
 
             objCandidato = new Candidato();
             objCandidato.setNome(txtNome.getText().trim());
-            String data = Formatacao.ajustaDataAMD(txtDataNasc.getText());
-            objCandidato.setData_nasc(data);
+            
+            //String data = Formatacao.ajustaDataAMD(txtDataNasc.getText());
+            //objCandidato.setData_nasc(data);
+            
             
             if(!lblId.getText().equals("ID")){
                 objCandidato.setId(Integer.parseInt(lblId.getText()));
-                objCandidatoControle = new CandidatoControle(objCandidato, null);
-                
+                objCandidatoControle = new CandidatoControle(objCandidato, null);    
                 
                 Combos c = (Combos) jcbBairro.getSelectedItem();
                 objCandidato.setId_bairro(Integer.parseInt(c.getCodigo()));
                 
-                     
                 retorno = objCandidatoControle.alterar();
             }else{
                 objCandidatoControle = new CandidatoControle(objCandidato, null);
@@ -198,11 +225,10 @@ public class CadCandidatos extends javax.swing.JFrame {
 
     private void jtbCandidatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbCandidatosMousePressed
         try{
-
             int linhaSelecionada = jtbCandidatos.getSelectedRow();//pega a linha selecionada
             String codigo = jtbCandidatos.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
 
-            //Verifica se clicou na coluna 2 = EXCLUIR
+            //Verifica se clicou na coluna 3 = EXCLUIR
             if(jtbCandidatos.isColumnSelected(3)){
                 try{
                     objCandidatoControle = new CandidatoControle(null, null);
@@ -253,37 +279,7 @@ public class CadCandidatos extends javax.swing.JFrame {
         // TODO add your handling code here:
         atualizarTabela();
     }//GEN-LAST:event_btnAtualizarActionPerformed
-
-    private void limparTela(){
-        try{
-            lblId.setText("ID");
-            txtNome.setText("");
-           
-            btnSalvar.setEnabled(true);
-            
-            atualizarTabela();
-            
-        }catch(Exception ex){
-            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
-        }
-    }   
-    
-    private void preencherCampos(){
-        try{
-            lblId.setText(String.valueOf(objCandidato.getId()));
-            txtNome.setText(objCandidato.getNome());
-            cbBairro.SetaComboBox(String.valueOf(objCandidato.getId_bairro()));
-            txtDataNasc.setText(objCandidato.getData_nasc());
-                
-            btnSalvar.setEnabled(true);
-            
-            atualizarTabela();
-            
-        }catch(Exception ex){
-            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
-        }
-    }   
-    
+      
     /**
      * @param args the command line arguments
      */

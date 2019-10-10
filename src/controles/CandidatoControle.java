@@ -8,12 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Vector;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -40,6 +35,7 @@ public class CandidatoControle {
         PreparedStatement stmt = null;
         
         try{
+            
             stmt = con.prepareStatement("INSERT INTO candidatos(nome,id_bairro,data_nascimento) VALUES(?,?,?)");
             stmt.setString(1, objCandidato.getNome());
             stmt.setInt(2, objCandidato.getId_bairro());
@@ -83,7 +79,7 @@ public class CandidatoControle {
         
     }
     
-    public void preencher() {
+    public void preencher(){
 
         Conexao.abreConexao();
         
@@ -113,10 +109,9 @@ public class CandidatoControle {
                 
                 linha.add(result.getInt(1));
                 linha.add(result.getString(2));
-                linha.add(result.getString(3));
-                linha.add("X");
-                //linha.add(new ImageIcon(""));
-                //linha.add(new ImageIcon(getClass().getResource("C:\\Users\\yuris\\Documents\\PROGRAMAÇÃO AVANÇADA\\NetBeans\\Meu_Projeto2019B\\src\\imagens\\trash.png")));
+                linha.add(Formatacao.ajustaDataDMA(result.getString(3)));
+                //linha.add(result.getString(3));
+                linha.add("      X");
                 
                 dadosTabela.add(linha);
             }
@@ -149,10 +144,10 @@ public class CandidatoControle {
                     column.setPreferredWidth(60);
                     break;
                 case 1:
-                    column.setPreferredWidth(200);
+                    column.setPreferredWidth(250);
                     break;
                 case 2:
-                    column.setPreferredWidth(70);
+                    column.setPreferredWidth(90);
                     break;
                 case 3:
                     column.setPreferredWidth(10);
@@ -178,8 +173,7 @@ public class CandidatoControle {
         //return (true);
     }
     
-    public Candidato buscar(String id)
-    {
+    public Candidato buscar(String id){
         try {
             Conexao.abreConexao();
             ResultSet rs = null;
