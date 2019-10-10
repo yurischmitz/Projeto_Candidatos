@@ -27,12 +27,51 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menu = new javax.swing.JMenu();
+        menuBairros = new javax.swing.JMenuItem();
+        menuCandidatos = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        menu.setText("Cadastro");
+
+        menuBairros.setText("Bairros");
+        menuBairros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBairrosActionPerformed(evt);
+            }
+        });
+        menu.add(menuBairros);
+
+        menuCandidatos.setText("Candidatos");
+        menuCandidatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCandidatosActionPerformed(evt);
+            }
+        });
+        menu.add(menuCandidatos);
+
+        jMenuBar1.add(menu);
+
+        setJMenuBar(jMenuBar1);
 
         setSize(new java.awt.Dimension(665, 384));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuBairrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBairrosActionPerformed
+        // TODO add your handling code here:
+        DialogBairros dp = new DialogBairros(this, true);
+        dp.setVisible(true);
+    }//GEN-LAST:event_menuBairrosActionPerformed
+
+    private void menuCandidatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCandidatosActionPerformed
+        // TODO add your handling code here:
+        DialogCandidatos dp = new DialogCandidatos(this, true);
+        dp.setVisible(true);
+    }//GEN-LAST:event_menuCandidatosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +109,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu menu;
+    private javax.swing.JMenuItem menuBairros;
+    private javax.swing.JMenuItem menuCandidatos;
     // End of variables declaration//GEN-END:variables
 }

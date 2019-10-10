@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package telas;
 
 import controles.BairroControle;
@@ -9,20 +14,23 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelos.Bairro;
 import ferramentas.*;
+
 /**
  *
- * @author Jonas Dhein
+ * @author yuris
  */
-public class CadBairros extends javax.swing.JFrame {
+public class DialogBairros extends javax.swing.JDialog {
 
     /**
-     * Creates new form CadBairros
+     * Creates new form DialogBairros
      */
+    
     Bairro objBairro;
     BairroControle objBairroControle;
     
-    public CadBairros() {
-        initComponents(); //renderiza os elementos na tela
+    public DialogBairros(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
         
         limparTela();
     }
@@ -60,12 +68,6 @@ public class CadBairros extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-        });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnSalvar.setText("SALVAR");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -73,7 +75,6 @@ public class CadBairros extends javax.swing.JFrame {
                 btnSalvarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, -1, -1));
 
         jtbBairros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,15 +94,11 @@ public class CadBairros extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtbBairros);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 451, 140));
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Campos com * são obrigatórios");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("Cadastro de Bairros");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, -1, -1));
 
         btnLimpar.setText("LIMPAR");
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -109,16 +106,12 @@ public class CadBairros extends javax.swing.JFrame {
                 btnLimparActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLimpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Nome *");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
         lblId.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblId.setText("ID");
-        getContentPane().add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
-        getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 250, -1));
 
         btnAtualizar.setText("Atualizar");
         btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -126,13 +119,72 @@ public class CadBairros extends javax.swing.JFrame {
                 btnAtualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, -1, -1));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 470, -1));
 
-        setSize(new java.awt.Dimension(502, 489));
-        setLocationRelativeTo(null);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 492, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(150, 150, 150)
+                            .addComponent(jLabel6))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(30, 30, 30)
+                            .addComponent(lblId))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(30, 30, 30)
+                            .addComponent(jLabel2))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(30, 30, 30)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(90, 90, 90)
+                            .addComponent(btnSalvar)
+                            .addGap(29, 29, 29)
+                            .addComponent(btnLimpar)
+                            .addGap(71, 71, 71)
+                            .addComponent(btnAtualizar))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel5))
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 467, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 21, Short.MAX_VALUE)
+                    .addComponent(jLabel6)
+                    .addGap(3, 3, 3)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(8, 8, 8)
+                    .addComponent(lblId)
+                    .addGap(16, 16, 16)
+                    .addComponent(jLabel2)
+                    .addGap(6, 6, 6)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(80, 80, 80)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnSalvar)
+                        .addComponent(btnLimpar)
+                        .addComponent(btnAtualizar))
+                    .addGap(37, 37, 37)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(30, 30, 30)
+                    .addComponent(jLabel5)
+                    .addGap(0, 22, Short.MAX_VALUE)))
+        );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try{
             boolean retorno;
@@ -152,13 +204,13 @@ public class CadBairros extends javax.swing.JFrame {
                 objBairroControle = new BairroControle(objBairro, null);
                 retorno = objBairroControle.incluir();
             }
-            
+
             if(retorno = true){
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Registro salvo");
             }else{
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar salvar");
             }
-            
+
             atualizarTabela();
 
         }catch(Exception ex){
@@ -169,7 +221,7 @@ public class CadBairros extends javax.swing.JFrame {
 
     private void jtbBairrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbBairrosMousePressed
         try{
-            
+
             int linhaSelecionada = jtbBairros.getSelectedRow();//pega a linha selecionada
             String codigo = jtbBairros.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
 
@@ -187,7 +239,7 @@ public class CadBairros extends javax.swing.JFrame {
                     if (wPergunta == true){
                         objBairro = new Bairro();
                         objBairro.setId(Integer.parseInt(lblId.getText()));
-                        
+
                         objBairroControle = new BairroControle(objBairro, null);
                         boolean wControle = objBairroControle.excluir();
                         if (wControle){
@@ -195,13 +247,13 @@ public class CadBairros extends javax.swing.JFrame {
                         }else{
                             CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao excluir!");
                         }
-                    limparTela();
+                        limparTela();
                     }
                 }catch(Exception ex){
                     CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
                 }
             }else{
-            
+
                 objBairroControle = new BairroControle(null, null);
                 objBairro = objBairroControle.buscar(codigo);
                 if (objBairro != null && objBairro.getId() > 0){
@@ -210,19 +262,11 @@ public class CadBairros extends javax.swing.JFrame {
                     CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao buscar Cliente no BD!");
                 }
             }
-        
+
         }catch(Exception ex){
             CaixaDeDialogo.obterinstancia().exibirMensagem(ex.getMessage(), 'e');
         }
     }//GEN-LAST:event_jtbBairrosMousePressed
-    
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-//        boolean wControle = Tela_Menu.preencheJanelas("Bairros", "I");
-//        if (wControle){
-//            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao ativar menu 'Ordens'");
-//        }
-//        dispose();
-    }//GEN-LAST:event_formWindowClosing
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         limparTela();
@@ -233,6 +277,7 @@ public class CadBairros extends javax.swing.JFrame {
         atualizarTabela();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
+    
     private void limparTela(){
         try{
             lblId.setText("ID");
@@ -259,7 +304,7 @@ public class CadBairros extends javax.swing.JFrame {
         }catch(Exception ex){
             CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
         }
-    }   
+    }
     
     /**
      * @param args the command line arguments
@@ -278,23 +323,28 @@ public class CadBairros extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogBairros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadBairros().setVisible(true);
+                DialogBairros dialog = new DialogBairros(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

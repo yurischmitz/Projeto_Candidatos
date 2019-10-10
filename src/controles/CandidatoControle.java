@@ -5,6 +5,7 @@ import ferramentas.Formatacao;
 import java.awt.Color;
 import java.awt.Component;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +40,8 @@ public class CandidatoControle {
             stmt = con.prepareStatement("INSERT INTO candidatos(nome,id_bairro,data_nascimento) VALUES(?,?,?)");
             stmt.setString(1, objCandidato.getNome());
             stmt.setInt(2, objCandidato.getId_bairro());
-            stmt.setString(3, objCandidato.getData_nasc());
+            Date data_nasc = Date.valueOf(objCandidato.getData_nasc());
+            stmt.setDate(3, data_nasc);
             
             stmt.executeUpdate();
             
@@ -99,7 +101,7 @@ public class CandidatoControle {
             SQL = " SELECT id, nome, data_nascimento ";
             SQL += " FROM candidatos ";
             SQL += " WHERE data_exclusao is null ";
-            SQL += " ORDER BY id ";
+            SQL += " ORDER BY nome ";
             
             result = Conexao.stmt.executeQuery(SQL);
 
@@ -111,7 +113,7 @@ public class CandidatoControle {
                 linha.add(result.getString(2));
                 linha.add(Formatacao.ajustaDataDMA(result.getString(3)));
                 //linha.add(result.getString(3));
-                linha.add("      X");
+                linha.add("X");
                 
                 dadosTabela.add(linha);
             }
