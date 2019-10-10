@@ -57,7 +57,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(665, 384));
+        setSize(new java.awt.Dimension(733, 457));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
