@@ -99,10 +99,10 @@ public class Candidato_Escola_Controle {
         try {
 
             String SQL = "";
-            SQL = " SELECT id, id_candidato, id_escola, data_ingresso ";
-            SQL += " FROM candidatos_escolas ";
-            SQL += " WHERE data_exclusao is null ";
-            SQL += " ORDER BY id ";
+            SQL = " SELECT ce.id, c.nome AS candidato, e.nome AS escola, to_char(data_ingresso, 'DD/MM/YYYY') ";
+            SQL += " FROM candidatos_escolas ce, candidatos c, escolas e ";
+            SQL += " WHERE c.id = ce.id_candidato AND e.id = ce.id_escola AND data_exclusao is null ";
+            SQL += " ORDER BY e.nome, c.nome ";
             
             result = Conexao.stmt.executeQuery(SQL);
 
