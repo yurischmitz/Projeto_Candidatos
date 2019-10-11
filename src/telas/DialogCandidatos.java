@@ -171,6 +171,11 @@ public class DialogCandidatos extends javax.swing.JDialog {
         lblDataNasc.setText("Data de Nascimento");
         getContentPane().add(lblDataNasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, -1, -1));
 
+        jcbBairro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbBairroActionPerformed(evt);
+            }
+        });
         getContentPane().add(jcbBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 200, -1));
         getContentPane().add(txtDataNasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 120, -1));
 
@@ -178,7 +183,7 @@ public class DialogCandidatos extends javax.swing.JDialog {
         lblBairro1.setText("Bairro");
         getContentPane().add(lblBairro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
 
-        setSize(new java.awt.Dimension(509, 442));
+        setSize(new java.awt.Dimension(516, 439));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -285,6 +290,10 @@ public class DialogCandidatos extends javax.swing.JDialog {
         // TODO add your handling code here:
         atualizarTabela();
     }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void jcbBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbBairroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbBairroActionPerformed
 
     /**
      * @param args the command line arguments

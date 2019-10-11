@@ -132,7 +132,7 @@ public class DialogBairros extends javax.swing.JDialog {
         getContentPane().add(btnAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 146, -1, -1));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 41, 470, -1));
 
-        setSize(new java.awt.Dimension(532, 423));
+        setSize(new java.awt.Dimension(516, 439));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

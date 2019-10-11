@@ -101,7 +101,7 @@ public class Candidato_Escola_Controle {
             String SQL = "";
             SQL = " SELECT ce.id, c.nome AS candidato, e.nome AS escola, to_char(data_ingresso, 'DD/MM/YYYY') ";
             SQL += " FROM candidatos_escolas ce, candidatos c, escolas e ";
-            SQL += " WHERE c.id = ce.id_candidato AND e.id = ce.id_escola AND data_exclusao is null ";
+            SQL += " WHERE c.id = ce.id_candidato AND e.id = ce.id_escola AND ce.data_exclusao is null ";
             SQL += " ORDER BY e.nome, c.nome ";
             
             result = Conexao.stmt.executeQuery(SQL);
@@ -112,8 +112,8 @@ public class Candidato_Escola_Controle {
                 
                 linha.add(result.getInt(1));
                 linha.add(result.getString(2));
-                linha.add(Formatacao.ajustaDataDMA(result.getString(3)));
-                //linha.add(result.getString(3));
+                linha.add(result.getString(3));
+                linha.add(result.getString(4));
                 linha.add("X");
                 
                 dadosTabela.add(linha);

@@ -27,15 +27,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
-        menu = new javax.swing.JMenu();
+        Menu = new javax.swing.JMenuBar();
+        menuCadastro = new javax.swing.JMenu();
         menuBairros = new javax.swing.JMenuItem();
         menuCandidatos = new javax.swing.JMenuItem();
+        menuCandidatosEscolas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        menu.setText("Cadastro");
+        menuCadastro.setText("Cadastro");
 
         menuBairros.setText("Bairros");
         menuBairros.addActionListener(new java.awt.event.ActionListener() {
@@ -43,7 +44,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 menuBairrosActionPerformed(evt);
             }
         });
-        menu.add(menuBairros);
+        menuCadastro.add(menuBairros);
 
         menuCandidatos.setText("Candidatos");
         menuCandidatos.addActionListener(new java.awt.event.ActionListener() {
@@ -51,13 +52,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 menuCandidatosActionPerformed(evt);
             }
         });
-        menu.add(menuCandidatos);
+        menuCadastro.add(menuCandidatos);
 
-        jMenuBar1.add(menu);
+        menuCandidatosEscolas.setText("Candidatos das Escolas");
+        menuCandidatosEscolas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCandidatosEscolasActionPerformed(evt);
+            }
+        });
+        menuCadastro.add(menuCandidatosEscolas);
 
-        setJMenuBar(jMenuBar1);
+        Menu.add(menuCadastro);
 
-        setSize(new java.awt.Dimension(733, 457));
+        setJMenuBar(Menu);
+
+        setSize(new java.awt.Dimension(733, 540));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -72,6 +81,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         DialogCandidatos dp = new DialogCandidatos(this, true);
         dp.setVisible(true);
     }//GEN-LAST:event_menuCandidatosActionPerformed
+
+    private void menuCandidatosEscolasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCandidatosEscolasActionPerformed
+        // TODO add your handling code here:
+        DialogCandidatos_Escolas dp = new DialogCandidatos_Escolas(this, true);
+        dp.setVisible(true);
+    }//GEN-LAST:event_menuCandidatosEscolasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -109,9 +124,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu menu;
+    private javax.swing.JMenuBar Menu;
     private javax.swing.JMenuItem menuBairros;
+    private javax.swing.JMenu menuCadastro;
     private javax.swing.JMenuItem menuCandidatos;
+    private javax.swing.JMenuItem menuCandidatosEscolas;
     // End of variables declaration//GEN-END:variables
 }
