@@ -10,6 +10,7 @@ import ferramentas.CaixaDeDialogo;
 import ferramentas.Combos;
 import ferramentas.Formatacao;
 import ferramentas.Validacao;
+import java.sql.SQLException;
 import modelos.Candidato_Escola;
 
 /**
@@ -20,7 +21,8 @@ public class DialogCandidatos_Escolas extends javax.swing.JDialog {
 
     Candidato_Escola objCandidato_Escola;
     Candidato_Escola_Controle objCandidato_Escola_Controle;
-    Combos cbBairro;
+    Combos cbCandidatos;
+    Combos cbEscolas;
     
     /**
      * Creates new form DialogCandidatos_Escolas
@@ -29,6 +31,14 @@ public class DialogCandidatos_Escolas extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
+        try {
+            cbCandidatos = new Combos(jcbCandidato);
+            cbCandidatos.PreencheCombo("SELECT id, nome FROM " + "candidatos ORDER BY nome");
+            cbEscolas = new Combos(jcbEscola);
+            cbEscolas.PreencheCombo("SELECT id, nome FROM " + "escolas ORDER BY nome");
+        } catch (SQLException ex) {
+            CaixaDeDialogo.obterinstancia().exibirMensagem("ERRO:" + ex.getMessage());
+        }     
         limparTela();
     }
 
@@ -45,8 +55,9 @@ public class DialogCandidatos_Escolas extends javax.swing.JDialog {
     
     private void preencherCampos(){
         try{
-            cbBairro.SetaComboBox(String.valueOf(objCandidato_Escola.getId_candidato()));
-            cbBairro.SetaComboBox(String.valueOf(objCandidato_Escola.getId_escola()));
+            lblId.setText(String.valueOf(objCandidato_Escola.getId()));
+            cbCandidatos.SetaComboBox(String.valueOf(objCandidato_Escola.getId_candidato()));
+            cbEscolas.SetaComboBox(String.valueOf(objCandidato_Escola.getId_escola()));
             txtData_Ingresso.setText(Formatacao.ajustaDataDMA(objCandidato_Escola.getData_ingresso()));
                 
             btnSalvar.setEnabled(true);
@@ -60,7 +71,9 @@ public class DialogCandidatos_Escolas extends javax.swing.JDialog {
     
     private void limparTela(){
         try{
-            //cbBairro.SetaComboBox(String.valueOf(""));
+            lblId.setText("ID");
+            cbCandidatos.SetaComboBox(String.valueOf(""));
+            cbEscolas.SetaComboBox(String.valueOf(""));
             txtData_Ingresso.setText("");
            
             btnSalvar.setEnabled(true);
@@ -92,6 +105,7 @@ public class DialogCandidatos_Escolas extends javax.swing.JDialog {
         lblId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastro Candidatos Escolas");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jcbCandidato.addActionListener(new java.awt.event.ActionListener() {
@@ -139,7 +153,7 @@ public class DialogCandidatos_Escolas extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jtbCandidatos_Escola);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 460, 100));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 500, 120));
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-save-close-24.png"))); // NOI18N
         btnSalvar.setText("SALVAR");
@@ -171,7 +185,7 @@ public class DialogCandidatos_Escolas extends javax.swing.JDialog {
         lblId.setText("ID");
         getContentPane().add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
 
-        setSize(new java.awt.Dimension(516, 331));
+        setSize(new java.awt.Dimension(516, 389));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -180,8 +194,8 @@ public class DialogCandidatos_Escolas extends javax.swing.JDialog {
             int linhaSelecionada = jtbCandidatos_Escola.getSelectedRow();//pega a linha selecionada
             String codigo = jtbCandidatos_Escola.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
 
-            //Verifica se clicou na coluna 3 = EXCLUIR
-            if(jtbCandidatos_Escola.isColumnSelected(3)){
+            //Verifica se clicou na coluna 4 = EXCLUIR
+            if(jtbCandidatos_Escola.isColumnSelected(4)){
                 try{
                     objCandidato_Escola_Controle = new Candidato_Escola_Controle(null, null);
                     objCandidato_Escola = objCandidato_Escola_Controle.buscar(codigo);

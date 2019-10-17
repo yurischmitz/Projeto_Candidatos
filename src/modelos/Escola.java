@@ -1,11 +1,11 @@
 package modelos;
 
-public class Candidato {
+public class Escola {
     
     private int id;
     private String nome;
+    private int vagas;
     private int id_bairro;
-    private String data_nasc;
 
     public int getId() {
         return id;
@@ -23,6 +23,14 @@ public class Candidato {
         this.nome = nome;
     }
 
+    public int getVagas() {
+        return vagas;
+    }
+
+    public void setVagas(int vagas) {
+        this.vagas = vagas;
+    }
+
     public int getId_bairro() {
         return id_bairro;
     }
@@ -30,12 +38,4 @@ public class Candidato {
     public void setId_bairro(int id_bairro) {
         this.id_bairro = id_bairro;
     }
-
-    public String getData_nasc() {
-        return data_nasc;
-    }
-
-    public void setData_nasc(String data_nasc) {
-        this.data_nasc = data_nasc;
-    }      
 }

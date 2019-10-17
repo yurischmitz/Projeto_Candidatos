@@ -1,3 +1,4 @@
+
 package controles;
 
 import banco.Conexao;
@@ -15,18 +16,18 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import modelos.*;
+
 /**
  *
- * @author Jonas Dhein
+ * @author yuris
  */
-public class Candidato_Escola_Controle {
+public class EscolaControle {
+    Escola objEscola;
+    JTable jtbEscolas = null;
     
-    Candidato_Escola objCandidato_Escola;
-    JTable jtbCandidatos_Escolas = null;
-    
-    public Candidato_Escola_Controle(Candidato_Escola objCandidato_Escola, JTable jtbCandidatos_Escolas) {
-        this.objCandidato_Escola = objCandidato_Escola;
-        this.jtbCandidatos_Escolas = jtbCandidatos_Escolas;
+    public EscolaControle(Escola objEscola, JTable jtbEscolas) {
+        this.objEscola = objEscola;
+        this.jtbEscolas = jtbEscolas;
     } 
     
     public boolean incluir(){
@@ -36,11 +37,11 @@ public class Candidato_Escola_Controle {
         PreparedStatement stmt = null;
         
         try{
-            stmt = con.prepareStatement("INSERT INTO candidatos_escolas(id_candidato,id_escola,data_ingresso) VALUES(?,?,?)");
-            stmt.setInt(1, objCandidato_Escola.getId_candidato());
-            stmt.setInt(2, objCandidato_Escola.getId_escola());
-            Date data_nasc = Date.valueOf(objCandidato_Escola.getData_ingresso());
-            stmt.setDate(3, data_nasc);
+            System.out.println(objEscola.getVagas());
+            stmt = con.prepareStatement("INSERT INTO escolas(nome,vagas,id_bairro) VALUES(?,?,?)");
+            stmt.setString(1, objEscola.getNome());
+            stmt.setInt(2, objEscola.getVagas());
+            stmt.setInt(3, objEscola.getId_bairro());
             
             stmt.executeUpdate();
             
@@ -61,12 +62,11 @@ public class Candidato_Escola_Controle {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE candidatos_escolas SET id_candidato=?, id_escola=?, data_ingresso=? WHERE id=?");
-            stmt.setInt(1, objCandidato_Escola.getId_candidato());
-            stmt.setInt(2, objCandidato_Escola.getId_escola());
-            Date data_ingr = Date.valueOf(objCandidato_Escola.getData_ingresso());
-            stmt.setDate(3, data_ingr);
-            stmt.setInt(4, objCandidato_Escola.getId());
+            stmt = con.prepareStatement("UPDATE escolas SET nome=?, vagas=?,id_bairro=? WHERE id=?");
+            stmt.setString(1, objEscola.getNome());
+            stmt.setInt(2, objEscola.getVagas());
+            stmt.setInt(3, objEscola.getId_bairro());
+            stmt.setInt(4, objEscola.getId());
             
             stmt.executeUpdate();
             
@@ -89,9 +89,9 @@ public class Candidato_Escola_Controle {
         Vector dadosTabela = new Vector(); //receber os dados do banco
         
         cabecalhos.add("Código");
-        cabecalhos.add("Candidato");
-        cabecalhos.add("Escola");
-        cabecalhos.add("Ingresso");
+        cabecalhos.add("Nome");
+        cabecalhos.add("Vagas");
+        //cabecalhos.add("Bairro");
         cabecalhos.add("Excluir");
         
         ResultSet result = null;
@@ -99,10 +99,10 @@ public class Candidato_Escola_Controle {
         try {
 
             String SQL = "";
-            SQL = " SELECT ce.id, c.nome AS candidato, e.nome AS escola, to_char(data_ingresso, 'DD/MM/YYYY') ";
-            SQL += " FROM candidatos_escolas ce, candidatos c, escolas e ";
-            SQL += " WHERE c.id = ce.id_candidato AND e.id = ce.id_escola AND ce.data_exclusao is null ";
-            SQL += " ORDER BY c.nome, e.nome ";
+            SQL = " SELECT id, nome, vagas ";
+            SQL += " FROM escolas ";
+            SQL += " WHERE data_exclusao is null ";
+            SQL += " ORDER BY nome ";
             
             result = Conexao.stmt.executeQuery(SQL);
 
@@ -112,9 +112,9 @@ public class Candidato_Escola_Controle {
                 
                 linha.add(result.getInt(1));
                 linha.add(result.getString(2));
-                linha.add(result.getString(3));
-                linha.add(result.getString(4));
-                linha.add("    X");
+                linha.add(result.getInt(3));
+                //linha.add(result.getInt(4));
+                linha.add("X");
                 
                 dadosTabela.add(linha);
             }
@@ -126,7 +126,7 @@ public class Candidato_Escola_Controle {
             System.out.println(e);
         }
 
-        jtbCandidatos_Escolas.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
+        jtbEscolas.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
 
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -136,32 +136,29 @@ public class Candidato_Escola_Controle {
         });
 
         // permite seleção de apenas uma linha da tabela
-        jtbCandidatos_Escolas.setSelectionMode(0);
+        jtbEscolas.setSelectionMode(0);
 
         // redimensiona as colunas de uma tabela
         TableColumn column = null;
         for (int i = 0; i <= 2; i++) {
-            column = jtbCandidatos_Escolas.getColumnModel().getColumn(i);
+            column = jtbEscolas.getColumnModel().getColumn(i);
             switch (i) {
                 case 0:
-                    column.setPreferredWidth(80);
+                    column.setPreferredWidth(50);
                     break;
                 case 1:
-                    column.setPreferredWidth(150);
+                    column.setPreferredWidth(200);
                     break;
                 case 2:
-                    column.setPreferredWidth(100);
+                    column.setPreferredWidth(50);
                     break;
                 case 3:
-                    column.setPreferredWidth(150);
-                    break;
-                case 4:
-                    column.setPreferredWidth(0);
+                    column.setPreferredWidth(10);
                     break;
             }
         }
         
-        jtbCandidatos_Escolas.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        jtbEscolas.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -179,14 +176,14 @@ public class Candidato_Escola_Controle {
         //return (true);
     }
     
-    public Candidato_Escola buscar(String id){
+    public Escola buscar(String id){
         try {
             Conexao.abreConexao();
             ResultSet rs = null;
 
             String SQL = "";
-            SQL = " SELECT id, id_candidato, id_escola, data_ingresso ";
-            SQL += " FROM candidatos_escolas ";
+            SQL = " SELECT id, nome, vagas, id_bairro ";
+            SQL += " FROM escolas ";
             SQL += " WHERE id = '" + id + "'";
             SQL += " AND data_exclusao is null";
 
@@ -195,13 +192,13 @@ public class Candidato_Escola_Controle {
                 rs = Conexao.stmt.executeQuery(SQL);
                 System.out.println("Executou Conexão em buscar");
 
-                objCandidato_Escola = new Candidato_Escola();
+                objEscola = new Escola();
                 if(rs.next() == true)
                 {
-                    objCandidato_Escola.setId(rs.getInt(1));
-                    objCandidato_Escola.setId_candidato(rs.getInt(2));
-                    objCandidato_Escola.setId_escola(rs.getInt(3));
-                    objCandidato_Escola.setData_ingresso(rs.getString(4));
+                    objEscola.setId(rs.getInt(1));
+                    objEscola.setNome(rs.getString(2));
+                    objEscola.setVagas(rs.getInt(3));
+                    objEscola.setId_bairro(rs.getInt(4));
                 }
             }
 
@@ -216,8 +213,8 @@ public class Candidato_Escola_Controle {
             return null;
         }
         
-        System.out.println ("Executou buscar candidato_escola com sucesso");
-        return objCandidato_Escola;
+        System.out.println ("Executou buscar candidato com sucesso");
+        return objEscola;
     }
     
     public boolean excluir(){
@@ -227,8 +224,8 @@ public class Candidato_Escola_Controle {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE candidatos_escolas SET data_exclusao = now() WHERE id=?");
-            stmt.setInt(1, objCandidato_Escola.getId());
+            stmt = con.prepareStatement("UPDATE escolas SET data_exclusao = now() WHERE id=?");
+            stmt.setInt(1, objEscola.getId());
                         
             stmt.executeUpdate();
             
@@ -240,5 +237,5 @@ public class Candidato_Escola_Controle {
         }finally{
             Conexao.fecharConexao(con, stmt);
         }
-    }   
+    }
 }
